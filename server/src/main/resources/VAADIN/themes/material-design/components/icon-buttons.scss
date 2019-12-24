@@ -1,0 +1,89 @@
+$md-iconbtn-size: 24px !default;
+$md-iconbtn-ripple-size: 48px !default;
+
+$md-iconbtn-size-small: 18px !default;
+$md-iconbtn-size-medium: 24px !default;
+$md-iconbtn-size-large: 48px !default;
+
+$md-iconbtn-light-font-color: $md-secondary-light !default;
+$md-iconbtn-light-disabled-font-color: $md-disabled-light !default;
+$md-iconbtn-light-focus-bg-color: rgba(255, 255, 255, 0.3) !default;
+
+$md-iconbtn-dark-font-color: $md-secondary-dark !default;
+$md-iconbtn-dark-disabled-font-color: $md-disabled-dark !default;
+$md-iconbtn-dark-focus-bg-color: $md-divider-dark !default;
+
+
+@mixin icon-buttons {
+  @include md-iconbtn(
+    md-iconbtn-light,
+    $md-iconbtn-light-font-color,
+    $md-iconbtn-light-disabled-font-color,
+    $md-iconbtn-light-focus-bg-color
+  );
+  @include md-iconbtn(
+    md-iconbtn-dark,
+    $md-iconbtn-dark-font-color,
+    $md-iconbtn-dark-disabled-font-color,
+    $md-iconbtn-dark-focus-bg-color
+  );
+}
+
+
+@mixin md-iconbtn(
+  $primaryStyleName,
+  $font-color,
+  $disabled-font-color,
+  $focus-bg-color) {
+
+  .#{$primaryStyleName} {
+    @include md-ripple-btn($focus-bg-color, $md-iconbtn-ripple-size);
+    @include md-cubic-std;
+    align-items: center;
+    color: $font-color;
+    cursor: pointer;
+    display: flex;
+    height: $md-iconbtn-size;
+    justify-content: center;
+    position: relative;
+    width: $md-iconbtn-size;
+
+    // Disabled style
+    &.v-disabled {
+      color: $disabled-font-color;
+      cursor: default;
+    }
+
+    * {
+      align-items: center;
+      display: flex;
+    }
+  }
+
+  .#{$primaryStyleName}-small {
+    height: $md-iconbtn-size-small;
+    width: $md-iconbtn-size-small;
+
+    .v-icon {
+      font-size: $md-iconbtn-size-small;
+    }
+  }
+
+  .#{$primaryStyleName}-medium {
+    height: $md-iconbtn-size-medium;
+    width: $md-iconbtn-size-medium;
+
+    .v-icon {
+      font-size: $md-iconbtn-size-medium;
+    }
+  }
+
+  .#{$primaryStyleName}-large {
+    height: $md-iconbtn-size-large;
+    width: $md-iconbtn-size-large;
+
+    .v-icon {
+      font-size: $md-iconbtn-size-large;
+    }
+  }
+}

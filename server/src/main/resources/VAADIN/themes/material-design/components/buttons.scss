@@ -1,0 +1,18 @@
+$md-btn-height: 36px;
+$md-btn-border-radius: 2px;
+
+@import "flat-buttons";
+@import "icon-buttons";
+@import "icon-toggles";
+@import "raised-buttons";
+@import "raised-icon-buttons";
+@import "toggle-button-groups";
+
+@mixin buttons {
+  @include flat-buttons;
+  @include icon-buttons;
+  @include icon-toggles;
+  @include raised-buttons;
+  @include raised-icon-buttons;
+  @include toggle-button-groups;
+}

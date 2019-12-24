@@ -1,0 +1,318 @@
+$md-combobox-input-height: 36px !default;
+
+// Combo box paddings
+$md-combobox-pad-bottom: 8px !default;
+$md-combobox-pad-top: 28px !default;
+$md-combobox-floatinglabel-disabled-pad-top: 8px !default;
+
+// Focus colors
+$md-combobox-light-focus-color: $md-blue-a700 !default;
+$md-combobox-dark-focus-color: $md-blue-a200 !default;
+
+// Error colors
+$md-combobox-light-error-color: $md-red-a400 !default;
+$md-combobox-dark-error-color: $md-red-a400 !default;
+
+// Disabled colors
+$md-combobox-light-disabled-color: rgba(0, 0, 0, 0.42) !default;
+$md-combobox-dark-disabled-color: $md-disabled-light !default;
+
+// Line colors
+$md-combobox-light-line-color: rgba(0, 0, 0, 0.42) !default;
+$md-combobox-dark-line-color: rgba(255, 255, 255, 0.7) !default;
+
+// Floating label positions
+$md-combobox-floatinglabel-top: 16px !default;
+$md-combobox-restinglabel-top: $md-combobox-pad-top + ($md-combobox-input-height - $md-subheader-line-height)/2 !default;
+$md-combobox-floatinglabel-disabled-restinglabel-top: $md-combobox-floatinglabel-disabled-pad-top + ($md-combobox-input-height - $md-subheader-line-height)/2 !default;
+
+// Helper padding
+$md-combobox-helper-pad-vertical: 6px !default;
+
+// Icon
+$md-combobox-icon-pad-right: 16px !default;
+$md-combobox-icon-top: $md-combobox-pad-top + ($md-combobox-input-height - $md-subheader-line-height)/2 !default;
+$md-combobox-floatinglabel-disabled-icon-top: $md-combobox-floatinglabel-disabled-pad-top + ($md-combobox-input-height - $md-subheader-line-height)/2 !default;
+
+// Menu
+$md-menu-light-bg-color: white !default;
+$md-menuitem-light-selected-bg-color: $md-grey-200 !default;
+$md-menu-dark-bg-color: $md-grey-800 !default;
+$md-menuitem-dark-selected-bg-color: $md-grey-700 !default;
+
+// Button
+$md-combobox-button-icon: "\e5c5" !default;
+$md-combobox-button-right: 0 !default;
+$md-combobox-button-size: 24px !default;
+$md-combobox-button-top: ($md-combobox-input-height - $md-combobox-button-size)/2 !default;
+
+// Item icon
+$md-combobox-itemicon-top: ($md-combobox-input-height - $md-icon-size)/2 !default;
+$md-combobox-itemicon-pad-right: $md-icon-size + $md-u4 !default;
+
+
+@mixin comboboxes {
+  @include md-combobox(
+    md-combobox-dark,
+    $md-primary-light,
+    $md-secondary-light,
+    $md-combobox-dark-line-color,
+    $md-combobox-dark-focus-color,
+    $md-combobox-dark-error-color,
+    $md-combobox-dark-disabled-color,
+    $md-menu-dark-bg-color,
+    $md-menuitem-dark-selected-bg-color
+  );
+  @include md-combobox(
+    md-combobox-light,
+    $md-primary-dark,
+    $md-secondary-dark,
+    $md-combobox-light-line-color,
+    $md-combobox-light-focus-color,
+    $md-combobox-light-error-color,
+    $md-combobox-light-disabled-color,
+    $md-menu-light-bg-color,
+    $md-menuitem-light-selected-bg-color
+  );
+}
+
+
+@mixin md-combobox(
+  $primaryStyleName,
+  $primary-color,
+  $secondary-color,
+  $line-color,
+  $focus-color,
+  $error-color,
+  $disabled-color,
+  $menu-bg-color,
+  $menuitem-selected-bg-color) {
+
+  .#{$primaryStyleName} {
+    @include md-cubic-std;
+    display: flex;
+    flex-direction: column;
+    padding-top: $md-combobox-pad-top;
+    position: relative;
+
+    * {
+      @include md-cubic-std;
+    }
+
+    .v-caption {
+      display: none;
+    }
+  }
+
+
+  // Hover
+  .#{$primaryStyleName}-input-input:hover {
+    box-shadow: inset 0 -1px 0 $primary-color,
+                      0 1px  0 $primary-color;
+  }
+
+
+  // Focused
+  .#{$primaryStyleName}-focus {
+    .#{$primaryStyleName}-label,
+    .#{$primaryStyleName}-icon {
+      color: $focus-color;
+    }
+    .#{$primaryStyleName}-input-input {
+      box-shadow: inset 0 -1px 0 $focus-color,
+                        0 1px  0 $focus-color;
+    }
+  }
+
+
+  // Error style
+  .#{$primaryStyleName}-error {
+    .#{$primaryStyleName}-label,
+    .#{$primaryStyleName}-icon,
+    .#{$primaryStyleName}-helper {
+      color: $error-color;
+    }
+    .#{$primaryStyleName}-input-input {
+      box-shadow: inset 0 -1px 0 $error-color,
+                        0 1px  0 $error-color;
+    }
+  }
+
+
+  // Disabled
+  .#{$primaryStyleName}.v-disabled {
+    .#{$primaryStyleName}-label,
+    .#{$primaryStyleName}-icon,
+    .#{$primaryStyleName}-helper {
+      color: $disabled-color;
+    }
+    .#{$primaryStyleName}-input-button {
+      display: none;
+    }
+    .#{$primaryStyleName}-input-input {
+      background-image: linear-gradient(to right, $line-color 50%, transparent 0%);
+      background-position: bottom;
+      background-repeat: repeat-x;
+      background-size: 4px 1px;
+      box-shadow: none;
+      color: $disabled-color;
+      cursor: default;
+    }
+  }
+
+
+  // Floating label
+  .#{$primaryStyleName}-label {
+    @include md-caption-font($secondary-color);
+    pointer-events: none;
+    position: absolute;
+    top: $md-combobox-floatinglabel-top;
+    white-space: nowrap;
+  }
+
+  .#{$primaryStyleName}-label-hide {
+    opacity: 0;
+  }
+
+  .#{$primaryStyleName}-label-resting {
+    @include md-subheader-font($secondary-color);
+    top: $md-combobox-restinglabel-top;
+  }
+
+  .#{$primaryStyleName}-float-disabled {
+    padding-top: $md-combobox-floatinglabel-disabled-pad-top;
+
+    .#{$primaryStyleName}-label,
+    .#{$primaryStyleName}-icon {
+      top: $md-combobox-floatinglabel-disabled-restinglabel-top;
+    }
+  }
+
+
+  // Icon style// Icon style
+  .#{$primaryStyleName}-with-icon {
+    padding-left: $md-icon-size + $md-combobox-icon-pad-right;
+
+    .#{$primaryStyleName}-icon {
+      display: flex;
+    }
+  }
+
+  .#{$primaryStyleName}-icon {
+    align-items: center;
+    color: $secondary-color;
+    display: none;
+    height: $md-icon-size;
+    justify-content: center;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    top: $md-combobox-icon-top;
+    width: $md-icon-size;
+
+    div, img {
+      display: flex;
+      max-height: 100%;
+      max-width: 100%;
+    }
+  }
+
+
+  // Input wrapper
+  .#{$primaryStyleName}-input {
+    position: relative;
+
+    .v-icon {
+      display: none;
+    }
+  }
+
+
+  // Input element
+  .#{$primaryStyleName}-input-input {
+    @include md-subheader-font($primary-color);
+    background: none;
+    border: none;
+    // For transition purposes
+    box-shadow: inset 0 -1px 0 $line-color,
+                      0 1px  0 transparent;
+    cursor: pointer;
+    height: $md-combobox-input-height;
+    margin: 0;
+    outline: none;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: $md-combobox-button-size;
+    padding-top: 0;
+    text-overflow: ellipsis;
+    width: 100% !important;
+
+    &.v-readonly {
+      box-shadow: none;
+    }
+
+    &::-webkit-input-placeholder,
+    &::-moz-placeholder,
+    &:-ms-input-placeholder,
+    &:-moz-placeholder {
+      @include md-subheader-font($secondary-color);
+      letter-spacing: normal;
+      word-spacing: normal;
+    }
+  }
+
+
+  // Drop down button
+  .#{$primaryStyleName}-input-button {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    height: $md-combobox-button-size;
+    justify-content: center;
+    position: absolute;
+    right: $md-combobox-button-right;
+    top: $md-combobox-button-top;
+    width: $md-combobox-button-size;
+
+    &::before {
+      @include MaterialIcons;
+      color: $secondary-color;
+      content: $md-combobox-button-icon;
+      z-index: 1;
+    }
+  }
+
+
+  // Helper label
+  .#{$primaryStyleName}-helper {
+    @include md-caption-font($secondary-color);
+
+    &:empty {
+      padding: 0 0 $md-combobox-pad-bottom 0;
+    }
+
+    &:not(:empty) {
+      padding: $md-combobox-helper-pad-vertical 0;
+    }
+  }
+
+
+  // Popup menu
+  .#{$primaryStyleName}-input-suggestpopup {
+    background-color: $menu-bg-color;
+    z-index: 999;
+
+    .v-icon {
+      color: $secondary-color;
+    }
+
+    .gwt-MenuItem {
+      color: $primary-color;
+    }
+
+    .gwt-MenuItem-selected {
+      background-color: $menuitem-selected-bg-color;
+    }
+  }
+
+}

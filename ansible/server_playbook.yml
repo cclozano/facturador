@@ -1,0 +1,119 @@
+tasks:
+  - name: Install aptitude using apt
+    apt: name=aptitude state=latest update_cache=yes force_apt_get=yes
+  - name: Install required system packages
+    apt: name={{ item }} state=latest update_cache=yes
+    loop: [ 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common','python-minimal', 'python-pip','python3-pip', 'virtualenv', 'python3-setuptools']
+  - name: Add Docker GPG apt Key
+    apt_key:
+      url: https://download.docker.com/linux/ubuntu/gpg
+      state: present
+  - name: Add Docker Repository
+    apt_repository:
+      repo: deb https://download.docker.com/linux/ubuntu bionic stable
+      state: present
+  - name: Update apt and install docker-ce
+    apt: update_cache=yes name=docker-ce state=latest
+  - name: Install Docker Module for Python
+    pip:
+      name: docker
+  - name: Create a network
+    docker_network:
+      name: traefik
+  - name: Run traefik Container
+    docker_container:
+      name: traefik
+      image: traefik:latest
+      recreate: no
+      state: started
+      ports:
+        - "443:443"
+        - "8080:8080"
+        - "80:80"
+      command: ["--api.insecure=true","--providers.docker=true","--providers.docker.exposedbydefault=false","--entryPoints.web.address=:80", "--entrypoints.websecure.address=:443" ,"--certificatesresolvers.mytlschallenge.acme.tlschallenge=true", "--certificatesresolvers.mytlschallenge.acme.email=cmendoza2002@gmail.com", "--certificatesresolvers.mytlschallenge.acme.storage=/letsencrypt/acme.json" ]
+      volumes:
+        - "./letsencrypt:/letsencrypt"
+        - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      labels:
+        traefik.http.routers.api.rule: 'PathPrefix(`/api`) || PathPrefix(`/dashboard`)'
+        traefik.http.routers.api.service: 'api@internal'
+        traefik.http.routers.api.middlewares: 'auth'
+        traefik.http.middlewares.auth.basicauth.users: 'max:$$apr1$$eCi0bNc2$$/us4IoGMZhliBgPb81rh4/'
+      networks:
+        - name: traefik
+  - name: Run Portainer Container
+    docker_container:
+      name: portainer
+      image: portainer/portainer
+      recreate: no
+      state: started
+      volumes:
+        - "portainer_data:/data portainer/portainer"
+        - "/var/run/docker.sock:/var/run/docker.sock"
+      labels:
+        traefik.enable: 'true'
+        traefik.http.routers.portainer.rule: 'Host(`portainer.migreenfrost.com`)'
+        traefik.http.routers.portainer.entrypoints: 'websecure'
+        traefik.http.routers.portainer.tls.certresolver: 'mytlschallenge'
+      networks:
+        - name: traefik
+  - name: Run Posgrest Container
+    docker_container:
+      name: pg-docker
+      image: postgres
+      recreate: no
+      state: started
+      restart_policy: always
+      env:
+        POSTGRES_PASSWORD: '{{pg_password}}'
+        TZ: America/Bogota
+      ports:
+        - "5432:5432"
+      volumes:
+        - "{{ansible_env.HOME}}/docker/volumes/postgres:/var/lib/postgresql/data"
+      networks:
+        - name: traefik
+  - name: Run PgAdmin 4
+    docker_container:
+      name: pg_admin_4
+      image: dpage/pgadmin4
+      recreate: no
+      state: started
+      restart_policy: always
+      labels:
+        traefik.enable: 'true'
+        traefik.http.routers.pgadmin.rule: 'Host(`pgadmin.migreenfrost.com`)'
+        traefik.http.routers.pgadmin.entrypoints: 'websecure'
+        traefik.http.routers.pgadmin.tls.certresolver: 'mytlschallenge'
+      env:
+        PGADMIN_DEFAULT_EMAIL: '{{pg_admin_user}}'
+        PGADMIN_DEFAULT_PASSWORD: '{{pg_admin_password}}'
+      ports:
+        - "8989:80"
+      networks:
+        - name: traefik
+  - name: Run La troncal web
+    docker_container:
+            name: greencontrol-troncal-web
+            image:  registry.reinventarlarueda.com:8123/greencontrol-web:1.0
+            recreate: no
+            state: started
+            env:
+              SPRING_APPLICATION_NAME: 'troncal'
+              SPRING_DATASOURCE_URL: 'jdbc:postgresql://pg-docker:5432/troncal_db'
+              spring_datasource_username: 'postgres'
+              spring_datasource_password: 'Berejues.1983'
+              app_config_nombre: 'La Troncal'
+              TZ: America/Bogota
+            labels:
+              traefik.enable: 'true'
+              traefik.http.routers.troncal_secure.rule: 'Host(`latroncal.migreenfrost.com`)'
+              traefik.http.routers.troncal_secure.entrypoints: 'websecure'
+              traefik.http.routers.troncal_secure.tls.certresolver: 'mytlschallenge'
+              traefik.http.routers.troncal_secure.service: 'troncalservice'
+              traefik.http.routers.troncal.rule: 'Host(`latroncal.migreenfrost.com`)'
+              traefik.http.routers.troncal.entrypoints: 'web'
+              traefik.http.routers.troncal.service: 'troncalservice'
+              traefik.http.services.troncalservice.loadbalancer.server.port: '8181'
+            networks:
+              - name: traefik

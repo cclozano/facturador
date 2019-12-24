@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Cabecera" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="508614f1-1b45-4a0e-ab23-889c73f2f9ee">
+    <property name="ireport.zoom" value="1.464100000000042"/>
+    <property name="ireport.x" value="0"/>
+    <property name="ireport.y" value="240"/>
+    <property name="net.sf.jasperreports.default.font.name" value="Verdana"/>
+    <property name="net.sf.jasperreports.default.pdf.embedded" value="true"/>
+    <property name="net.sf.jasperreports.default.pdf.font.name" value="Verdana"/>
+    <import value="net.sf.jasperreports.engine.*"/>
+    <import value="java.util.*"/>
+    <import value="net.sf.jasperreports.engine.data.*"/>
+    <parameter name="P_TITULO" class="java.lang.String"/>
+    <parameter name="P_SUBTITULO" class="java.lang.String"/>
+    <parameter name="LOGO_URL" class="java.lang.String"/>
+    <parameter name="PATH" class="java.lang.String"/>
+    <field name="numeroContribuyente" class="java.lang.String"/>
+    <field name="llevaContabilidad" class="java.lang.String"/>
+    <field name="numeroFactura" class="java.lang.String"/>
+    <field name="direccionEstablecimiento" class="java.lang.String"/>
+    <field name="direccionComprador" class="java.lang.String"/>
+    <field name="claveAcceso" class="java.lang.String"/>
+    <field name="correoElectronicoNotificacion" class="java.lang.String"/>
+    <field name="moneda" class="java.lang.String"/>
+    <field name="fechaRecepcion" class="java.util.Date"/>
+    <field name="fechaEmision" class="java.util.Date"/>
+    <field name="fechaAutorizacion" class="java.util.Date"/>
+    <field name="identificacionComprador" class="java.lang.String"/>
+    <field name="importeTotal" class="java.math.BigDecimal"/>
+    <field name="subtotalX" class="java.math.BigDecimal"/>
+    <field name="subtotal0" class="java.math.BigDecimal"/>
+    <field name="subtotalSinIVA" class="java.math.BigDecimal"/>
+    <field name="valorIVA" class="java.math.BigDecimal"/>
+    <field name="totalSinImpuestos" class="java.math.BigDecimal"/>
+    <field name="totalDescuento" class="java.math.BigDecimal"/>
+    <field name="propina" class="java.math.BigDecimal"/>
+    <field name="razonSocialComprador" class="java.lang.String"/>
+    <field name="produccion" class="java.lang.Boolean"/>
+    <field name="porcentajeIva" class="java.lang.String"/>
+    <field name="bean" class="com.aurora.pos.server.reportes.dto.Factura">
+        <fieldDescription><![CDATA[_THIS]]></fieldDescription>
+    </field>
+    <field name="informacionTributaria" class="com.aurora.pos.server.reportes.dto.InformacionTributaria">
+        <fieldDescription><![CDATA[informacionTributaria]]></fieldDescription>
+    </field>
+    <field name="estado" class="java.lang.String"/>
+    <field name="detalles" class="java.util.Collection">
+        <fieldDescription><![CDATA[detalles]]></fieldDescription>
+    </field>
+    <field name="camposAdicionales" class="java.util.Collection">
+        <fieldDescription><![CDATA[camposAdicionales]]></fieldDescription>
+    </field>
+    <field name="pagos" class="java.util.Collection">
+        <fieldDescription><![CDATA[pagos]]></fieldDescription>
+    </field>
+    <title>
+        <band height="286" splitType="Stretch">
+            <rectangle radius="10">
+                <reportElement x="270" y="12" width="285" height="217" uuid="e17d9848-f71d-488c-bfba-0e49cd318c5f"/>
+            </rectangle>
+            <rectangle radius="10">
+                <reportElement x="1" y="99" width="259" height="130" uuid="46582f57-a2bd-422a-984f-aa7599e7770f"/>
+            </rectangle>
+            <image>
+                <reportElement x="20" y="6" width="229" height="90" uuid="e0b9776e-3579-4051-99b2-b9939ca06707"/>
+                <imageExpression><![CDATA[$P{LOGO_URL}]]></imageExpression>
+            </image>
+            <rectangle>
+                <reportElement x="0" y="235" width="555" height="47" uuid="487ab819-d16f-4aa5-9f42-dbeb34f09eb9"/>
+            </rectangle>
+            <staticText>
+                <reportElement key="staticText" x="280" y="20" width="52" height="14" uuid="1c9d7089-f064-4a8c-9472-92548ba6bd3d"/>
+                <textElement>
+                    <font fontName="Verdana" size="10" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+                </textElement>
+                <text><![CDATA[R.U.C:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="358" y="20" width="103" height="14" uuid="ef4c3d77-e474-49ac-8ef8-77f2f1e67627"/>
+                <textElement>
+                    <font fontName="Verdana" size="11" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{informacionTributaria}.getRuc()]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement key="staticText" x="280" y="56" width="26" height="14" forecolor="#FF0000" uuid="58419e74-5aaf-4c45-8247-e439035f0a77"/>
+                <textElement>
+                    <font fontName="Verdana" size="11" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+                </textElement>
+                <text><![CDATA[No.]]></text>
+            </staticText>
+            <staticText>
+                <reportElement key="staticText" x="280" y="37" width="66" height="18" uuid="24cf9488-6f2f-4f80-b8eb-565c4381c41b"/>
+                <textElement>
+                    <font fontName="Verdana" size="12" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+                </textElement>
+                <text><![CDATA[FACTURA]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="321" y="56" width="218" height="14" forecolor="#FF0000" uuid="c117ac02-3017-4103-bc18-42a43bba09e4"/>
+                <textElement>
+                    <font fontName="Verdana" size="11" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{numeroFactura}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement key="staticText" x="280" y="72" width="201" height="17" uuid="afbef771-d71d-4095-ab0f-63e015542885"/>
+                <textElement>
+                    <font fontName="Verdana" size="12" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+                </textElement>
+                <text><![CDATA[NÚMERO DE AUTORIZACIÓN]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="280" y="90" width="259" height="13" uuid="c6741d62-792f-4c88-81c2-dbb8c76ca8bd"/>
+                <textElement>
+                    <font fontName="Verdana" size="8" isUnderline="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{bean}.getRespuestaAutorizacion() != null && $F{bean}.getRespuestaAutorizacion().getNumeroAutorizacion() != null ? $F{bean}.getRespuestaAutorizacion().getNumeroAutorizacion():$F{claveAcceso}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement key="staticText" x="281" y="109" width="105" height="15" uuid="a5c65fcf-9c64-424a-bb0e-905ad303dc36"/>
+                <textElement>
+                    <font fontName="Verdana" size="12" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+                </textElement>
+                <text><![CDATA[FECHA Y HORA DE]]></text>
+            </staticText>
+            <staticText>
+                <reportElement key="staticText" x="280" y="125" width="116" height="15" uuid="6d49447a-d045-488f-b2d6-f0b82ef3502f"/>
+                <textElement>
+                    <font fontName="Verdana" size="12" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+                </textElement>
+                <text><![CDATA[AUTORIZACIÓN:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="396" y="127" width="144" height="13" uuid="612ee0a2-5234-4392-a93e-20c215176dce"/>
+                <textElement>
+                    <font fontName="Verdana" isUnderline="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SS").format($F{fechaAutorizacion})]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement key="staticText" x="280" y="144" width="77" height="19" uuid="a56d227c-494f-4913-9c2a-4ef269bab7b1"/>
+                <textElement>
+                    <font fontName="Verdana" size="12" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+                </textElement>
+                <text><![CDATA[AMBIENTE:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement key="staticText" x="280" y="185" width="128" height="15" uuid="4d7cc3bb-7930-44c1-a54e-bbb90124ff16"/>
+                <textElement>
+                    <font fontName="Verdana" size="12" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+                </textElement>
+                <text><![CDATA[CLAVE DE ACCESO]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="10" y="109" width="245" height="18" uuid="0761034d-2d5a-4abd-85b5-0b7fd9e04d77"/>
+                <textElement verticalAlignment="Middle">
+                    <font fontName="Times New Roman" size="9" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{informacionTributaria}.getRazonSocial()]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement key="staticText" x="10" y="140" width="55" height="12" uuid="4f3f5a5f-156a-446b-977c-93f9aac2d890"/>
+                <textElement>
+                    <font fontName="Verdana" size="8" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+                </textElement>
+                <text><![CDATA[Dir. Matriz:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="65" y="140" width="184" height="23" uuid="d5673f86-55cb-4908-8ac6-c79b69528284"/>
+                <textElement verticalAlignment="Top">
+                    <font fontName="Verdana" size="8" isUnderline="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{informacionTributaria}.getDireccionMatriz()]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="76" y="163" width="173" height="23" uuid="8f1f4be3-0e00-4a50-ba45-11ea4ba85f73"/>
+                <textElement>
+                    <font fontName="Verdana" size="8" isUnderline="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{direccionEstablecimiento}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement key="staticText" x="10" y="163" width="66" height="14" uuid="aa81df97-12b2-49ef-b8bc-f706df1cf207"/>
+                <textElement>
+                    <font fontName="Verdana" size="8" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+                </textElement>
+                <text><![CDATA[Dir. Sucursal:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="193" y="190" width="67" height="13" uuid="80368866-9204-4e2b-a886-e746d1777078"/>
+                <textElement>
+                    <font fontName="Verdana" size="8" isUnderline="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{numeroContribuyente}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement key="staticText" x="10" y="190" width="168" height="13" uuid="d3076b15-a411-443d-bf74-21378555bd6b"/>
+                <textElement>
+                    <font fontName="Verdana" size="8" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+                </textElement>
+                <text><![CDATA[Contribuyente Especial Nro.:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="193" y="203" width="67" height="13" uuid="bdb6997e-dcf8-45e3-a980-fe0da9750959"/>
+                <textElement>
+                    <font fontName="Verdana" size="8" isUnderline="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{llevaContabilidad}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement key="staticText" x="10" y="203" width="183" height="13" uuid="e349c9bb-aec4-4e96-9cd1-f68c14be6b7f"/>
+                <textElement>
+                    <font fontName="Verdana" size="8" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+                </textElement>
+                <text><![CDATA[OBLIGADO A LLEVAR CONTABILIDAD]]></text>
+            </staticText>
+            <staticText>
+                <reportElement key="staticText" x="10" y="245" width="168" height="13" uuid="d62707b4-5cea-41ff-84ef-00db943c8026"/>
+                <textElement>
+                    <font fontName="Verdana" size="8" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+                </textElement>
+                <text><![CDATA[Razón Social / Nombres y Apellidos:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="178" y="245" width="194" height="13" uuid="76645fa0-a05e-4235-84b4-0d6c001a3f4d"/>
+                <textElement>
+                    <font fontName="Verdana" size="8" isUnderline="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{razonSocialComprador}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement key="staticText" x="10" y="269" width="168" height="13" uuid="48cf76af-95c6-493b-ad00-f37563d77999"/>
+                <textElement>
+                    <font fontName="Verdana" size="8" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+                </textElement>
+                <text><![CDATA[Fecha Emisión:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement key="staticText" x="372" y="245" width="59" height="13" uuid="50c9aacb-1959-4465-94b3-8a75aefdfe38"/>
+                <textElement>
+                    <font fontName="Verdana" size="8" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+                </textElement>
+                <text><![CDATA[RUC/CI:]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="431" y="245" width="124" height="13" uuid="05984c9b-f323-4b3c-8ec2-c7b6a1e234f5"/>
+                <textElement>
+                    <font fontName="Verdana" size="8" isUnderline="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{identificacionComprador}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="181" y="269" width="194" height="13" uuid="1dd81540-7a61-43e4-bdb1-a62eed7cdf1f"/>
+                <textElement>
+                    <font fontName="Verdana" isUnderline="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{fechaEmision})]]></textFieldExpression>
+            </textField>
+            <componentElement>
+                <reportElement x="275" y="198" width="270" height="27" uuid="c6561fe4-caf5-4d3d-8c57-c8d44e92fd7f"/>
+                <jr:Codabar xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" textPosition="bottom">
+                    <jr:codeExpression><![CDATA[$F{claveAcceso}]]></jr:codeExpression>
+                </jr:Codabar>
+            </componentElement>
+            <textField>
+                <reportElement x="357" y="145" width="167" height="18" uuid="f8bb0409-1fd3-48b6-b7d4-dc7fd43d81ba"/>
+                <textElement>
+                    <font fontName="Verdana" isUnderline="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{produccion}? "PRODUCCION":"DESARROLLO"]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement key="staticText" x="281" y="164" width="77" height="16" uuid="58b151ac-04d6-4da7-b3d4-d1ba153b84d7"/>
+                <textElement>
+                    <font fontName="Verdana" size="12" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+                </textElement>
+                <text><![CDATA[EMISION:]]></text>
+            </staticText>
+            <staticText>
+                <reportElement key="staticText" x="358" y="164" width="77" height="16" uuid="618e2103-f22e-45c1-b7aa-07e41e6b14cc"/>
+                <textElement>
+                    <font fontName="Verdana" size="12" isBold="false"/>
+                </textElement>
+                <text><![CDATA[Normal]]></text>
+            </staticText>
+        </band>
+    </title>
+    <detail>
+        <band height="44">
+            <subreport isUsingCache="true">
+                <reportElement x="0" y="0" width="555" height="40" uuid="bb99060e-47ad-472f-8536-79d64dce2be8"/>
+                <dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{detalles})]]></dataSourceExpression>
+                <subreportExpression><![CDATA[JasperCompileManager.compileReport($P{PATH}+"detalleFactura.jrxml")]]></subreportExpression>
+            </subreport>
+        </band>
+        <band height="130">
+            <subreport isUsingCache="true">
+                <reportElement x="1" y="18" width="306" height="102" uuid="56e27cb6-246f-4cfc-868b-a486b32fa439"/>
+                <dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{camposAdicionales})]]></dataSourceExpression>
+                <subreportExpression><![CDATA[JasperCompileManager.compileReport($P{PATH}+"informacionAdicional.jrxml")]]></subreportExpression>
+            </subreport>
+            <staticText>
+                <reportElement key="staticText" x="76" y="5" width="139" height="13" uuid="887a4725-6c7e-46db-9966-5e71c783def6"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font fontName="Verdana" size="8" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+                </textElement>
+                <text><![CDATA[Información Adicional]]></text>
+            </staticText>
+            <rectangle>
+                <reportElement x="321" y="1" width="233" height="128" uuid="b554a399-0249-4e6e-b7c4-12ad4e9254ae"/>
+            </rectangle>
+            <staticText>
+                <reportElement key="staticText" x="321" y="47" width="129" height="13" uuid="39f05638-082a-417b-8f84-4af68a0fbac7"/>
+                <textElement>
+                    <font fontName="Verdana" size="8" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+                </textElement>
+                <text><![CDATA[SUBTOTAL SIN IMPUESTOS]]></text>
+            </staticText>
+            <staticText>
+                <reportElement key="staticText" x="321" y="18" width="86" height="13" uuid="868bc749-db14-4c95-9382-88b92818f7ea"/>
+                <textElement>
+                    <font fontName="Verdana" size="8" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+                </textElement>
+                <text><![CDATA[SUBTOTAL 0%]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="458" y="113" width="94" height="16" uuid="479753a3-4458-4a0d-8e95-0bbbac9eb38b"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Verdana" size="11" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{importeTotal}!=null?$F{importeTotal}.setScale(2, BigDecimal.ROUND_HALF_UP):java.math.BigDecimal.ZERO]]></textFieldExpression>
+            </textField>
+            <line>
+                <reportElement key="line" x="321" y="15" width="233" height="1" uuid="91fa7c75-d971-45cc-8334-ac297ad79b6d"/>
+            </line>
+            <textField>
+                <reportElement x="458" y="3" width="94" height="13" uuid="8d129e30-f3fc-462f-9443-d460b497791b"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Verdana" isUnderline="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{subtotalX}!=null?$F{subtotalX}.setScale(2, BigDecimal.ROUND_HALF_UP):java.math.BigDecimal.ZERO]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="458" y="100" width="94" height="13" uuid="7a69ce44-58cb-4060-b32f-507c0ee67031"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Verdana" isUnderline="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{propina}!=null?$F{propina}.setScale(2, BigDecimal.ROUND_HALF_UP):java.math.BigDecimal.ZERO]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="457" y="61" width="95" height="13" uuid="f0cac432-60d7-4884-b2e5-4515fbb48788"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Verdana" isUnderline="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{totalDescuento}!=null?$F{totalDescuento}.setScale(2, BigDecimal.ROUND_HALF_UP):java.math.BigDecimal.ZERO]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="457" y="48" width="95" height="13" uuid="90365b70-012c-439e-a00a-eb652749c13a"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Verdana" isUnderline="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{totalSinImpuestos}!=null?$F{totalSinImpuestos}.setScale(2, BigDecimal.ROUND_HALF_UP):java.math.BigDecimal.ZERO]]></textFieldExpression>
+            </textField>
+            <line>
+                <reportElement key="line" x="321" y="72" width="233" height="1" uuid="7ad192a0-5d52-4134-be40-12b3c69bdfe2"/>
+            </line>
+            <staticText>
+                <reportElement key="staticText" x="321" y="86" width="24" height="13" uuid="37049bd5-3d0d-46b0-aecd-a10304466e0d"/>
+                <textElement>
+                    <font fontName="Verdana" size="8" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+                </textElement>
+                <text><![CDATA[IVA ]]></text>
+            </staticText>
+            <staticText>
+                <reportElement key="staticText" x="321" y="99" width="86" height="13" uuid="2381b634-06d1-4613-acef-f187c915629e"/>
+                <textElement>
+                    <font fontName="Verdana" size="8" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+                </textElement>
+                <text><![CDATA[PROPINA]]></text>
+            </staticText>
+            <line>
+                <reportElement key="line" x="321" y="59" width="233" height="1" uuid="2ad8539f-f68b-440b-84bc-7e1b8a15b639"/>
+            </line>
+            <line>
+                <reportElement key="line" x="321" y="46" width="233" height="1" uuid="299631fb-ea72-44c4-8ab3-2a66f768238d"/>
+            </line>
+            <staticText>
+                <reportElement key="staticText" x="321" y="60" width="86" height="13" uuid="c8d2122e-0878-4daf-80d2-bff4374af055"/>
+                <textElement>
+                    <font fontName="Verdana" size="8" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+                </textElement>
+                <text><![CDATA[DESCUENTO]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="457" y="74" width="95" height="13" uuid="5fe1e7ea-0a35-4f11-813e-33822afdc00b"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Verdana" isUnderline="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[BigDecimal.ZERO.setScale(2, BigDecimal.ROUND_HALF_UP)]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="458" y="19" width="94" height="13" uuid="a5a860c6-c52a-4d3c-9474-4d56ee9d6bc0"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Verdana" isUnderline="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{subtotal0}!=null?$F{subtotal0}.setScale(2, BigDecimal.ROUND_HALF_UP):java.math.BigDecimal.ZERO]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="457" y="35" width="95" height="13" uuid="3f76d820-ef38-4d06-ba43-f7f65a6c4406"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Verdana" isUnderline="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[BigDecimal.ZERO.setScale(2, BigDecimal.ROUND_HALF_UP)]]></textFieldExpression>
+            </textField>
+            <line>
+                <reportElement key="line" x="321" y="111" width="233" height="1" uuid="abc02539-e2b7-4937-ad7f-20f7194995e7"/>
+            </line>
+            <staticText>
+                <reportElement key="staticText" x="321" y="3" width="50" height="13" uuid="e18d401c-151c-43a5-87cf-da7039831e4e"/>
+                <textElement>
+                    <font fontName="Verdana" size="8" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+                </textElement>
+                <text><![CDATA[SUBTOTAL]]></text>
+            </staticText>
+            <line>
+                <reportElement key="line" x="321" y="31" width="233" height="1" uuid="073097d4-0845-44ef-96ba-caff82c2786c"/>
+            </line>
+            <staticText>
+                <reportElement key="staticText" x="321" y="112" width="109" height="16" uuid="60a4f15e-4256-446d-80af-aaeda5b0c316"/>
+                <textElement>
+                    <font fontName="Verdana" size="11" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+                </textElement>
+                <text><![CDATA[VALOR TOTAL]]></text>
+            </staticText>
+            <line>
+                <reportElement key="line" x="459" y="1" width="1" height="127" uuid="4e0951bc-270f-4004-81f2-74133d5a2e4f"/>
+            </line>
+            <textField>
+                <reportElement x="458" y="87" width="94" height="13" uuid="ffe64969-2eb3-47e2-99fc-9a30e1642eb0"/>
+                <textElement textAlignment="Right">
+                    <font fontName="Verdana" isUnderline="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{valorIVA}!=null?$F{valorIVA}.setScale(2, BigDecimal.ROUND_HALF_UP):java.math.BigDecimal.ZERO]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement key="staticText" x="321" y="35" width="129" height="12" uuid="9113887e-dcaf-47e9-bf3b-1a5110171e7f"/>
+                <textElement>
+                    <font fontName="Verdana" size="8" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+                </textElement>
+                <text><![CDATA[SUBTOTAL No Sujeto a IVA]]></text>
+            </staticText>
+            <line>
+                <reportElement key="line" x="321" y="98" width="233" height="1" uuid="16cf5fbb-2d7b-46ca-9b81-b4fe68168ad3"/>
+            </line>
+            <line>
+                <reportElement key="line" x="321" y="85" width="233" height="1" uuid="cbbdd2a8-1ed1-4e2d-849c-e9831c0daf34"/>
+            </line>
+            <staticText>
+                <reportElement key="staticText" x="321" y="73" width="86" height="13" uuid="26386814-8f5b-49c1-97f7-811940f51f13"/>
+                <textElement>
+                    <font fontName="Verdana" size="8" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+                </textElement>
+                <text><![CDATA[ICE]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="371" y="3" width="24" height="13" uuid="7b55efcf-ad5e-48f4-a7c4-273aa8f3f2a5"/>
+                <textElement>
+                    <font fontName="Verdana" size="8" isBold="true" isUnderline="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{valorIVA}!=null && $F{valorIVA}.compareTo(BigDecimal.ZERO) != 0 && $F{subtotalX} != null && $F{subtotalX}.compareTo(BigDecimal.ZERO) != 0 ? (($F{valorIVA}.divide($F{subtotalX}, BigDecimal.ROUND_HALF_UP)).multiply(new BigDecimal(100))).intValue() + "%":"IVA"]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="343" y="86" width="28" height="13" uuid="6211d875-eee2-4f20-a1b7-51a4722f1148"/>
+                <textElement>
+                    <font fontName="Verdana" size="8" isBold="true" isUnderline="false"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$F{valorIVA}!=null && $F{valorIVA}.compareTo(BigDecimal.ZERO) != 0 && $F{subtotalX} != null && $F{subtotalX}.compareTo(BigDecimal.ZERO) != 0 ? (($F{valorIVA}.divide($F{subtotalX}, BigDecimal.ROUND_HALF_UP)).multiply(new BigDecimal(100))).intValue() + "%":""]]></textFieldExpression>
+            </textField>
+        </band>
+        <band height="74">
+            <staticText>
+                <reportElement key="staticText" x="77" y="0" width="139" height="13" uuid="9da3db41-173c-4d38-ad8f-7a3dbdd56e58"/>
+                <textElement textAlignment="Center">
+                    <font fontName="Verdana" size="8" isBold="true" isItalic="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="true"/>
+                </textElement>
+                <text><![CDATA[FORMAS DE PAGO]]></text>
+            </staticText>
+            <subreport isUsingCache="true">
+                <reportElement x="1" y="12" width="306" height="61" uuid="15f0beab-ba66-49bb-89fa-6e0947849cb8"/>
+                <dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{pagos})]]></dataSourceExpression>
+                <subreportExpression><![CDATA[JasperCompileManager.compileReport($P{PATH}+"formasDePago.jrxml")]]></subreportExpression>
+            </subreport>
+        </band>
+    </detail>
+    <summary>
+        <band height="13"/>
+    </summary>
+</jasperReport>

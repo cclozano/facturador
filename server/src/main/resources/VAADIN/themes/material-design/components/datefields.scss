@@ -1,0 +1,547 @@
+$md-datefield-input-height: 36px !default;
+
+// Combo box paddings
+$md-datefield-pad-bottom: 8px !default;
+$md-datefield-pad-top: 28px !default;
+$md-datefield-floatinglabel-disabled-pad-top: 8px !default;
+
+// Focus colors
+$md-datefield-light-focus-color: $md-blue-a700 !default;
+$md-datefield-dark-focus-color: $md-blue-a200 !default;
+
+// Error colors
+$md-datefield-light-error-color: $md-red-a400 !default;
+$md-datefield-dark-error-color: $md-red-a400 !default;
+
+// Disabled colors
+$md-datefield-light-disabled-color: rgba(0, 0, 0, 0.42) !default;
+$md-datefield-dark-disabled-color: $md-disabled-light !default;
+
+// Line colors
+$md-datefield-light-line-color: rgba(0, 0, 0, 0.42) !default;
+$md-datefield-dark-line-color: rgba(255, 255, 255, 0.7) !default;
+
+// Floating label positions
+$md-datefield-floatinglabel-top: 16px !default;
+$md-datefield-restinglabel-top: $md-datefield-pad-top + ($md-datefield-input-height - $md-subheader-line-height)/2 !default;
+$md-datefield-floatinglabel-disabled-restinglabel-top: $md-datefield-floatinglabel-disabled-pad-top + ($md-datefield-input-height - $md-subheader-line-height)/2 !default;
+
+// Helper padding
+$md-datefield-helper-pad-vertical: 6px !default;
+
+// Icon
+$md-datefield-icon-pad-right: 16px !default;
+$md-datefield-icon-top: $md-datefield-pad-top + ($md-datefield-input-height - $md-subheader-line-height)/2 !default;
+$md-datefield-floatinglabel-disabled-icon-top: $md-datefield-floatinglabel-disabled-pad-top + ($md-datefield-input-height - $md-subheader-line-height)/2 !default;
+
+// Button
+$md-datefield-button-icon: "\e878" !default;
+$md-datefield-button-right: 0 !default;
+$md-datefield-button-size: 24px !default;
+$md-datefield-button-top: ($md-datefield-input-height - $md-datefield-button-size)/2 !default;
+
+// Popup
+$md-datefield-popup-pad-bottom: 8px !default;
+$md-datefield-popup-pad-horizontal: 10px !default;
+
+$md-datefield-popup-header-height: 48px !default;
+$md-datefield-popup-header-pad-top: 4px !default;
+
+$md-datefield-popup-cell-height: 40px !default;
+$md-datefield-popup-cell-width: 44px !default;
+$md-datefield-popup-cell-selection-size: 44px !default;
+
+$md-datefield-popup-ripple-size: $md-icon-size * 2;
+
+$md-datefield-popup-light-bg-color: $md-primary-light !default;
+$md-datefield-popup-light-today-color: $md-blue-500 !default;
+$md-datefield-popup-light-selection-color: $md-primary-light !default;
+$md-datefield-popup-light-selection-bg-color: $md-blue-500 !default;
+$md-datefield-popup-light-ripple-color: $md-divider-dark !default;
+
+$md-datefield-popup-dark-bg-color: $md-grey-800 !default;
+$md-datefield-popup-dark-today-color: $md-blue-200 !default;
+$md-datefield-popup-dark-selection-color: $md-primary-dark !default;
+$md-datefield-popup-dark-selection-bg-color: $md-blue-200 !default;
+$md-datefield-popup-dark-ripple-color: $md-divider-light !default;
+
+
+@mixin datefields {
+  @include md-datefield(
+    md-datefield-dark,
+    $md-primary-light,
+    $md-secondary-light,
+    $md-datefield-dark-line-color,
+    $md-datefield-dark-focus-color,
+    $md-datefield-dark-error-color,
+    $md-datefield-dark-disabled-color,
+    $md-datefield-popup-dark-bg-color,
+    $md-datefield-popup-dark-ripple-color,
+    $md-datefield-popup-ripple-size,
+    $md-datefield-popup-dark-today-color,
+    $md-datefield-popup-dark-selection-color,
+    $md-datefield-popup-dark-selection-bg-color
+  );
+  @include md-datefield(
+    md-datefield-light,
+    $md-primary-dark,
+    $md-secondary-dark,
+    $md-datefield-light-line-color,
+    $md-datefield-light-focus-color,
+    $md-datefield-light-error-color,
+    $md-datefield-light-disabled-color,
+    $md-datefield-popup-light-bg-color,
+    $md-datefield-popup-light-ripple-color,
+    $md-datefield-popup-ripple-size,
+    $md-datefield-popup-light-today-color,
+    $md-datefield-popup-light-selection-color,
+    $md-datefield-popup-light-selection-bg-color
+  );
+}
+
+
+@mixin md-datefield(
+  $primaryStyleName,
+  $primary-color,
+  $secondary-color,
+  $line-color,
+  $focus-color,
+  $error-color,
+  $disabled-color,
+  $popup-bg-color,
+  $ripple-color,
+  $ripple-size,
+  $today-color,
+  $selection-color,
+  $selection-bg) {
+
+  .#{$primaryStyleName} {
+    @include md-cubic-std;
+    display: flex;
+    flex-direction: column;
+    padding-top: $md-datefield-pad-top;
+    position: relative;
+
+    * {
+      @include md-cubic-std;
+    }
+
+    .v-caption {
+      display: none;
+    }
+  }
+
+
+  // Hover
+  .#{$primaryStyleName}-input-textfield:hover {
+    box-shadow: inset 0 -1px 0 $primary-color,
+                      0 1px  0 $primary-color;
+  }
+
+
+  // Focused
+  .#{$primaryStyleName}-focus {
+    .#{$primaryStyleName}-label,
+    .#{$primaryStyleName}-icon {
+      color: $focus-color;
+    }
+    .#{$primaryStyleName}-input-textfield {
+      box-shadow: inset 0 -1px 0 $focus-color,
+                        0 1px  0 $focus-color;
+    }
+  }
+
+
+  // Error style
+  .#{$primaryStyleName}-error {
+    .#{$primaryStyleName}-label,
+    .#{$primaryStyleName}-icon,
+    .#{$primaryStyleName}-helper {
+      color: $error-color;
+    }
+    .#{$primaryStyleName}-input-textfield {
+      box-shadow: inset 0 -1px 0 $error-color,
+                        0 1px  0 $error-color;
+    }
+  }
+
+
+  // Disabled
+  .#{$primaryStyleName}.v-disabled {
+    .#{$primaryStyleName}-label,
+    .#{$primaryStyleName}-icon,
+    .#{$primaryStyleName}-helper {
+      color: $disabled-color;
+    }
+    .#{$primaryStyleName}-input-button {
+      display: none;
+    }
+    .#{$primaryStyleName}-input-textfield {
+      background-image: linear-gradient(to right, $line-color 50%, transparent 0%);
+      background-position: bottom;
+      background-repeat: repeat-x;
+      background-size: 4px 1px;
+      box-shadow: none;
+      color: $disabled-color;
+      cursor: default;
+    }
+  }
+
+
+  // Floating label
+  .#{$primaryStyleName}-label {
+    @include md-caption-font($secondary-color);
+    pointer-events: none;
+    position: absolute;
+    top: $md-datefield-floatinglabel-top;
+    white-space: nowrap;
+  }
+
+  .#{$primaryStyleName}-label-hide {
+    opacity: 0;
+  }
+
+  .#{$primaryStyleName}-label-resting {
+    @include md-subheader-font($secondary-color);
+    top: $md-datefield-restinglabel-top;
+  }
+
+  .#{$primaryStyleName}-float-disabled {
+    padding-top: $md-datefield-floatinglabel-disabled-pad-top;
+
+    .#{$primaryStyleName}-label,
+    .#{$primaryStyleName}-icon {
+      top: $md-datefield-floatinglabel-disabled-restinglabel-top;
+    }
+  }
+
+
+  // Icon style
+  .#{$primaryStyleName}-with-icon {
+    padding-left: $md-icon-size + $md-datefield-icon-pad-right;
+
+    .#{$primaryStyleName}-icon {
+      display: flex;
+    }
+  }
+
+  .#{$primaryStyleName}-icon {
+    align-items: center;
+    color: $secondary-color;
+    display: none;
+    height: $md-icon-size;
+    justify-content: center;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    top: $md-datefield-icon-top;
+    width: $md-icon-size;
+
+    div, img {
+      display: flex;
+      max-height: 100%;
+      max-width: 100%;
+    }
+  }
+
+
+  // Input wrapper
+  .#{$primaryStyleName}-input {
+    position: relative;
+
+    .v-icon {
+      display: none;
+    }
+  }
+
+
+  // Input element
+  .#{$primaryStyleName}-input-textfield {
+    @include md-subheader-font($primary-color);
+    background: none;
+    border: none;
+    // For transition purposes
+    box-shadow: inset 0 -1px 0 $line-color,
+                      0 1px  0 transparent;
+    cursor: pointer;
+    height: $md-datefield-input-height;
+    margin: 0;
+    outline: none;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: $md-datefield-button-size;
+    padding-top: 0;
+    text-overflow: ellipsis;
+    width: 100% !important;
+
+    &.v-readonly {
+      box-shadow: none;
+    }
+
+    &::-webkit-input-placeholder,
+    &::-moz-placeholder,
+    &:-ms-input-placeholder,
+    &:-moz-placeholder {
+      @include md-subheader-font($secondary-color);
+      letter-spacing: normal;
+      word-spacing: normal;
+    }
+  }
+
+
+  // Drop down button
+  .#{$primaryStyleName}-input-button {
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    height: $md-datefield-button-size;
+    justify-content: center;
+    padding: 0;
+    position: absolute;
+    right: $md-datefield-button-right;
+    top: $md-datefield-button-top;
+    width: $md-datefield-button-size;
+
+    &::before {
+      @include MaterialIcons;
+      color: $secondary-color;
+      content: $md-datefield-button-icon;
+      z-index: 1;
+    }
+  }
+
+
+  // Helper label
+  .#{$primaryStyleName}-helper {
+    @include md-caption-font($secondary-color);
+
+    &:empty {
+      padding: 0 0 $md-datefield-pad-bottom 0;
+    }
+
+    &:not(:empty) {
+      padding: $md-datefield-helper-pad-vertical 0;
+    }
+  }
+
+
+  // Popup calendar
+  .#{$primaryStyleName}-input-popup {
+    @include md-elevation-8dp;
+    background-color: $popup-bg-color;
+    border-radius: $md-card-border-radius;
+    display: inline-flex;
+
+    table {
+      border-collapse: collapse;
+    }
+
+    td {
+      padding: 0;
+      text-align: center;
+    }
+
+    button {
+      @include md-ripple-btn($ripple-color, $ripple-size);
+      align-items: center;
+      background: none;
+      border: none;
+      color: transparent;
+      cursor: pointer;
+      display: flex;
+      font-size: 0;
+      height: $md-icon-size;
+      justify-content: center;
+      margin: 0 auto;
+      padding: 0;
+      width: $md-icon-size;
+      -webkit-appearance: none;
+
+      &::before {
+        @include MaterialIcons;
+        color: $secondary-color;
+      }
+    }
+
+    .v-button-prevyear::before {
+      content: "\e020";
+    }
+    .v-button-prevmonth::before {
+      content: "\e5cb";
+    }
+    .v-button-nextmonth::before {
+      content: "\e5cc";
+    }
+    .v-button-nextyear::before {
+      content: "\e01f";
+    }
+
+    // Column headers
+    td[role="columnheader"] {
+      @include md-caption-font($secondary-color);
+      font-weight: $md-font-weight-medium;
+      height: $md-datefield-popup-cell-height;
+      width: $md-datefield-popup-cell-width;
+
+      strong {
+        display: none;
+      }
+
+      &:nth-child(2)::after {
+        content: "S";
+      }
+      &:nth-child(3)::after {
+        content: "M";
+      }
+      &:nth-child(4)::after {
+        content: "T";
+      }
+      &:nth-child(5)::after {
+        content: "W";
+      }
+      &:nth-child(6)::after {
+        content: "T";
+      }
+      &:nth-child(7)::after {
+        content: "F";
+      }
+      &:nth-child(8)::after {
+        content: "S";
+      }
+    }
+
+    .v-datefield-time {
+      align-items: center;
+      display: inline-flex;
+      justify-content: center;
+      margin-bottom: $md-u2;
+      margin-top: $md-u2;
+      position: relative;
+
+      &::after {
+        @include MaterialIcons;
+        color: $secondary-color;
+        content: $md-combobox-button-icon;
+        right: 0;
+        pointer-events: none;
+        position: absolute;
+        top: ($md-textfield-input-height - $md-icon-size) / 2;
+      }
+
+      .v-select {
+        @include md-subheader-font($primary-color);
+        background: none;
+        border: none;
+        border-radius: 0;
+        box-shadow: inset 0 -1px 0 $line-color,
+                          0  1px 0 transparent;
+        cursor: pointer;
+        height: $md-textfield-input-height;
+        padding-right: $md-u4;
+      }
+
+      .v-label {
+        align-items: center;
+        display: flex;
+        height: $md-textfield-input-height;
+        justify-content: center;
+        position: relative;
+        width: $md-icon-size;
+
+        &::before {
+          @include MaterialIcons;
+          color: $secondary-color;
+          content: $md-combobox-button-icon;
+          left: -$md-u3;
+          pointer-events: none;
+          position: absolute;
+          top: ($md-textfield-input-height - $md-icon-size) / 2;
+        }
+      }
+    }
+  }
+
+  .v-datefield-selecteddate {
+    display: none;
+  }
+
+  .#{$primaryStyleName}-input-calendarpanel {
+    display: inline-flex;
+    padding-bottom: $md-datefield-popup-pad-bottom;
+    padding-left: $md-datefield-popup-pad-horizontal;
+    padding-right: $md-datefield-popup-pad-horizontal;
+  }
+
+  .#{$primaryStyleName}-input-calendarpanel-header {
+    align-items: center;
+    display: flex;
+    height: $md-datefield-popup-header-height;
+    padding-top: $md-datefield-popup-header-pad-top;
+  }
+
+  .#{$primaryStyleName}-input-calendarpanel-month {
+    @include md-b2-font($primary-color);
+    flex: 1;
+  }
+
+  .#{$primaryStyleName}-input-calendarpanel-prevyear,
+  .#{$primaryStyleName}-input-calendarpanel-prevmonth,
+  .#{$primaryStyleName}-input-calendarpanel-nextmonth,
+  .#{$primaryStyleName}-input-calendarpanel-nextyear {
+    width: $md-datefield-popup-cell-width;
+  }
+
+  // Day cells
+  .#{$primaryStyleName}-input-calendarpanel-day {
+    @include md-caption-font($primary-color);
+    @include md-cubic-std;
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    height: $md-datefield-popup-cell-height;
+    justify-content: center;
+    position: relative;
+    width: $md-datefield-popup-cell-width;
+    z-index: 0;
+
+    &::after {
+      @include md-cubic-std;
+      content: "";
+      background-color: $selection-bg;
+      border-radius: 100%;
+      height: $md-datefield-popup-cell-selection-size;
+      left: 50%;
+      margin-left: $md-datefield-popup-cell-selection-size/-2;
+      margin-top: $md-datefield-popup-cell-selection-size/-2;
+      position: absolute;
+      top: 50%;
+      transform: scale(0);
+      width: $md-datefield-popup-cell-selection-size;
+      z-index: -1;
+    }
+  }
+
+  // Today
+  .#{$primaryStyleName}-input-calendarpanel-day-today {
+    color: $today-color;
+    font-weight: $md-font-weight-medium;
+  }
+
+  // "Off" month
+  .#{$primaryStyleName}-input-calendarpanel-day-offmonth {
+    color: $disabled-color;
+  }
+
+  // Selected date
+  .#{$primaryStyleName}-input-calendarpanel-day-selected {
+    color: $selection-color;
+    font-weight: $md-font-weight-medium;
+
+    &::after {
+      transform: scale(1);
+    }
+  }
+
+}

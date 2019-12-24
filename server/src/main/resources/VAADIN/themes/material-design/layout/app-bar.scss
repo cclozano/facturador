@@ -1,0 +1,30 @@
+@mixin app-bar {
+  .md-appbar {
+    @include md-elevation-4dp;
+    align-items: center;
+    display: flex;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 200;
+
+    div[role="button"] + div[class*=title] {
+      padding-left: $md-content-margin-left-tablet - $md-gutter-tablet - $md-icon-size;
+    }
+  }
+
+  .root {
+    &[width-range~="0-960px"] {
+      .md-appbar {
+        height: $md-appbar-height-mobile;
+        padding: 0 $md-gutter-mobile;
+      }
+    }
+    &[width-range~="961px-"] {
+      .md-appbar {
+        height: $md-appbar-height-tablet;
+        padding: 0 $md-gutter-tablet;
+      }
+    }
+  }
+}

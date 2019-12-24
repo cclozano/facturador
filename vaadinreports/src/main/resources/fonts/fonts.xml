@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<fontFamilies>
+
+    <fontFamily name="Arial">
+        <normal><![CDATA[fonts/arial.ttf]]></normal>
+        <pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+    </fontFamily>
+
+    <fontFamily name="Algerian">
+        <normal><![CDATA[fonts/Algerian.ttf]]></normal>
+        <pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+    </fontFamily>
+
+    <fontFamily name="Bell Mt">
+        <normal><![CDATA[fonts/bell-mt.ttf]]></normal>
+        <pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+    </fontFamily>
+
+    <fontFamily name="Savoye Std">
+        <normal><![CDATA[fonts/SavoyeStd.ttf]]></normal>
+        <pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+    </fontFamily>
+
+    <fontFamily name="Cambria">
+        <normal><![CDATA[fonts/Cambria.ttf]]></normal>
+        <normal><![CDATA[fonts/cambriab.ttf]]></normal>
+        <normal><![CDATA[fonts/cambriai.ttf]]></normal>
+        <normal><![CDATA[fonts/cambriaz.ttf]]></normal>
+        <pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+    </fontFamily>
+
+</fontFamilies>

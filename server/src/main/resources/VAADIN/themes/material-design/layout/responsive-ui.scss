@@ -1,0 +1,14 @@
+@mixin responsive-ui {
+  .root {
+
+    /* MOBILE */
+    &[width-range~="0-960px"] {
+      padding-top: $md-appbar-height-mobile;
+    }
+
+    /* TABLET & DESKTOP */
+    &[width-range~="961px-"] {
+      padding-top: $md-appbar-height-tablet;
+    }
+  }
+}

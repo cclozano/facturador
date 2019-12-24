@@ -1,0 +1,224 @@
+$md-datepicker-pad-bottom: 8px !default;
+$md-datepicker-pad-horizontal: 10px !default;
+
+$md-datepicker-header-height: 48px !default;
+$md-datepicker-header-pad-top: 4px !default;
+
+$md-datepicker-cell-height: 40px !default;
+$md-datepicker-cell-width: 44px !default;
+
+$md-datepicker-cell-selection-size: 44px !default;
+
+$md-datepicker-ripple-size: $md-icon-size * 2;
+
+$md-datepicker-light-today-color: $md-blue-500 !default;
+$md-datepicker-light-selection-color: $md-primary-light !default;
+$md-datepicker-light-selection-bg-color: $md-blue-500 !default;
+$md-datepicker-light-ripple-color: $md-divider-dark !default;
+
+$md-datepicker-dark-today-color: $md-blue-200 !default;
+$md-datepicker-dark-selection-color: $md-primary-dark !default;
+$md-datepicker-dark-selection-bg-color: $md-blue-200 !default;
+$md-datepicker-dark-ripple-color: $md-divider-light !default;
+
+
+@mixin datepickers {
+  @include md-datepicker(
+    md-datepicker-light,
+    $md-primary-dark,
+    $md-secondary-dark,
+    $md-disabled-dark,
+    $md-datepicker-light-ripple-color,
+    $md-datepicker-ripple-size,
+    $md-datepicker-light-today-color,
+    $md-datepicker-light-selection-color,
+    $md-datepicker-light-selection-bg-color
+  );
+  @include md-datepicker(
+    md-datepicker-dark,
+    $md-primary-light,
+    $md-secondary-light,
+    $md-disabled-light,
+    $md-datepicker-dark-ripple-color,
+    $md-datepicker-ripple-size,
+    $md-datepicker-dark-today-color,
+    $md-datepicker-dark-selection-color,
+    $md-datepicker-dark-selection-bg-color
+  );
+}
+
+
+@mixin md-datepicker(
+  $primaryStyleName,
+  $primary-color,
+  $secondary-color,
+  $disabled-color,
+  $ripple-color,
+  $ripple-size,
+  $today-color,
+  $selection-color,
+  $selection-bg) {
+
+  .#{$primaryStyleName} {
+    display: inline-flex;
+
+    table {
+      border-collapse: collapse;
+    }
+
+    td {
+      padding: 0;
+      text-align: center;
+    }
+
+    button {
+      @include md-ripple-btn($ripple-color, $ripple-size);
+      align-items: center;
+      background: none;
+      border: none;
+      color: transparent;
+      cursor: pointer;
+      display: flex;
+      font-size: 0;
+      height: $md-icon-size;
+      justify-content: center;
+      margin: 0 auto;
+      padding: 0;
+      width: $md-icon-size;
+      -webkit-appearance: none;
+
+      &::before {
+        @include MaterialIcons;
+        color: $secondary-color;
+      }
+    }
+
+    .v-button-prevyear::before {
+      content: "\e020";
+    }
+    .v-button-prevmonth::before {
+      content: "\e5cb";
+    }
+    .v-button-nextmonth::before {
+      content: "\e5cc";
+    }
+    .v-button-nextyear::before {
+      content: "\e01f";
+    }
+
+    // Column headers
+    td[role="columnheader"] {
+      @include md-caption-font($secondary-color);
+      font-weight: $md-font-weight-medium;
+      height: $md-datepicker-cell-height;
+      width: $md-datepicker-cell-width;
+
+      strong {
+      //  display: none;
+      }
+
+      /* Disabled until locale fix.
+      &:nth-child(2)::after {
+        content: "S";
+      }
+      &:nth-child(3)::after {
+        content: "M";
+      }
+      &:nth-child(4)::after {
+        content: "T";
+      }
+      &:nth-child(5)::after {
+        content: "W";
+      }
+      &:nth-child(6)::after {
+        content: "T";
+      }
+      &:nth-child(7)::after {
+        content: "F";
+      }
+      &:nth-child(8)::after {
+        content: "S";
+      }
+      */
+    }
+  }
+
+  .#{$primaryStyleName}-calendarpanel {
+    display: inline-flex;
+    padding-bottom: $md-datepicker-pad-bottom;
+    padding-left: $md-datepicker-pad-horizontal;
+    padding-right: $md-datepicker-pad-horizontal;
+  }
+
+  .#{$primaryStyleName}-calendarpanel-header {
+    align-items: center;
+    display: flex;
+    height: $md-datepicker-header-height;
+    padding-top: $md-datepicker-header-pad-top;
+  }
+
+  .#{$primaryStyleName}-calendarpanel-month {
+    @include md-b2-font($primary-color);
+    flex: 1;
+  }
+
+  // Button wrappers
+  .#{$primaryStyleName}-calendarpanel-prevyear,
+  .#{$primaryStyleName}-calendarpanel-prevmonth,
+  .#{$primaryStyleName}-calendarpanel-nextmonth,
+  .#{$primaryStyleName}-calendarpanel-nextyear {
+    width: $md-datepicker-cell-width;
+  }
+
+  // Day cells
+  .#{$primaryStyleName}-calendarpanel-day {
+    @include md-caption-font($primary-color);
+    @include md-cubic-std;
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    height: $md-datepicker-cell-height;
+    justify-content: center;
+    position: relative;
+    width: $md-datepicker-cell-width;
+    z-index: 0;
+
+    &::after {
+      @include md-cubic-std;
+      content: "";
+      background-color: $selection-bg;
+      border-radius: 100%;
+      height: $md-datepicker-cell-selection-size;
+      left: 50%;
+      margin-left: $md-datepicker-cell-selection-size/-2;
+      margin-top: $md-datepicker-cell-selection-size/-2;
+      position: absolute;
+      top: 50%;
+      transform: scale(0);
+      width: $md-datepicker-cell-selection-size;
+      z-index: -1;
+    }
+  }
+
+  // Today
+  .#{$primaryStyleName}-calendarpanel-day-today {
+    color: $today-color;
+    font-weight: $md-font-weight-medium;
+  }
+
+  // "Off" month
+  .#{$primaryStyleName}-calendarpanel-day-offmonth {
+    color: $disabled-color;
+  }
+
+  // Selected date
+  .#{$primaryStyleName}-calendarpanel-day-selected {
+    color: $selection-color;
+    font-weight: $md-font-weight-medium;
+
+    &::after {
+      transform: scale(1);
+    }
+  }
+
+}

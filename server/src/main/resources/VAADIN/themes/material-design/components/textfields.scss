@@ -1,0 +1,254 @@
+$md-textfield-input-height: 36px !default;
+
+// Text field paddings
+$md-textfield-pad-bottom: 8px !default;
+$md-textfield-pad-top: 28px !default;
+$md-textfield-floatinglabel-disabled-pad-top: 8px !default;
+
+// Focus colors
+$md-textfield-light-focus-color: $md-blue-a700 !default;
+$md-textfield-dark-focus-color: $md-blue-a200 !default;
+
+// Error colors
+$md-textfield-light-error-color: $md-red-a400 !default;
+$md-textfield-dark-error-color: $md-red-a400 !default;
+
+// Disabled colors
+$md-textfield-light-disabled-color: rgba(0, 0, 0, 0.42) !default;
+$md-textfield-dark-disabled-color: $md-disabled-light !default;
+
+// Line colors
+$md-textfield-light-line-color: rgba(0, 0, 0, 0.42) !default;
+$md-textfield-dark-line-color: rgba(255, 255, 255, 0.7) !default;
+
+// Floating label positions
+$md-textfield-floatinglabel-top: 16px !default;
+$md-textfield-restinglabel-top: $md-textfield-pad-top + ($md-textfield-input-height - $md-subheader-line-height)/2 !default;
+$md-textfield-floatinglabel-disabled-restinglabel-top: $md-textfield-floatinglabel-disabled-pad-top + ($md-textfield-input-height - $md-subheader-line-height)/2 !default;
+
+// Helper label padding
+$md-textfield-helper-pad-vertical: 6px !default;
+
+// Icon
+$md-textfield-icon-pad-right: 16px !default;
+$md-textfield-icon-top: $md-textfield-pad-top + ($md-textfield-input-height - $md-subheader-line-height)/2 !default;
+$md-textfield-floatinglabel-disabled-icon-top: $md-textfield-floatinglabel-disabled-pad-top + ($md-textfield-input-height - $md-subheader-line-height)/2 !default;
+
+
+@mixin textfields {
+  @include md-textfield(
+    md-textfield-dark,
+    $md-primary-light,
+    $md-secondary-light,
+    $md-textfield-dark-line-color,
+    $md-textfield-dark-focus-color,
+    $md-textfield-dark-error-color,
+    $md-textfield-dark-disabled-color
+  );
+  @include md-textfield(
+    md-textfield-light,
+    $md-primary-dark,
+    $md-secondary-dark,
+    $md-textfield-light-line-color,
+    $md-textfield-light-focus-color,
+    $md-textfield-light-error-color,
+    $md-textfield-light-disabled-color
+  );
+}
+
+
+@mixin md-textfield(
+  $primaryStyleName,
+  $primary-color,
+  $secondary-color,
+  $line-color,
+  $focus-color,
+  $error-color,
+  $disabled-color) {
+
+  .#{$primaryStyleName} {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    padding-top: $md-textfield-pad-top;
+    position: relative;
+
+    * {
+      @include md-cubic-std;
+    }
+
+    .v-caption {
+      display: none;
+    }
+  }
+
+
+  // Hover style
+  .#{$primaryStyleName}-input:hover {
+    box-shadow: inset 0 -1px 0 $primary-color,
+                      0 1px  0 $primary-color;
+  }
+
+
+  // Focused
+  .#{$primaryStyleName}-focus {
+    .#{$primaryStyleName}-label,
+    .#{$primaryStyleName}-icon {
+      color: $focus-color;
+    }
+    .#{$primaryStyleName}-input {
+      box-shadow: inset 0 -1px 0 $focus-color,
+                        0 1px  0 $focus-color;
+    }
+  }
+
+
+  // Error style
+  .#{$primaryStyleName}-error {
+    .#{$primaryStyleName}-label,
+    .#{$primaryStyleName}-icon,
+    .#{$primaryStyleName}-helper {
+      color: $error-color;
+    }
+    .#{$primaryStyleName}-input {
+      box-shadow: inset 0 -1px 0 $error-color,
+                        0 1px  0 $error-color;
+    }
+  }
+
+
+  // Disabled
+  .#{$primaryStyleName}.v-disabled {
+    .#{$primaryStyleName}-label,
+    .#{$primaryStyleName}-icon,
+    .#{$primaryStyleName}-helper {
+      color: $disabled-color;
+    }
+    .#{$primaryStyleName}-input {
+      background-image: linear-gradient(to right, $line-color 50%, transparent 0%);
+      background-position: bottom;
+      background-repeat: repeat-x;
+      background-size: 4px 1px;
+      box-shadow: none;
+      color: $disabled-color;
+      cursor: default;
+    }
+  }
+
+
+  // Read-only
+  .#{$primaryStyleName}.v-readonly {
+    .#{$primaryStyleName}-label,
+    .#{$primaryStyleName}-icon,
+    .#{$primaryStyleName}-helper {
+      color: $secondary-color;
+    }
+    .#{$primaryStyleName}-input {
+      background-image: linear-gradient(to right, $line-color 50%, transparent 0%);
+      background-position: bottom;
+      background-repeat: repeat-x;
+      background-size: 4px 1px;
+      box-shadow: none;
+      color: $primary-color;
+      cursor: default;
+    }
+  }
+
+
+  // Floating label
+  .#{$primaryStyleName}-label {
+    @include md-caption-font($secondary-color);
+    pointer-events: none;
+    position: absolute;
+    top: $md-textfield-floatinglabel-top;
+    white-space: nowrap;
+  }
+
+  .#{$primaryStyleName}-label-hide {
+    opacity: 0;
+  }
+
+  .#{$primaryStyleName}-label-resting {
+    @include md-subheader-font($secondary-color);
+    top: $md-textfield-restinglabel-top;
+  }
+
+  .#{$primaryStyleName}-float-disabled {
+    padding-top: $md-textfield-floatinglabel-disabled-pad-top;
+
+    .#{$primaryStyleName}-label,
+    .#{$primaryStyleName}-icon {
+      top: $md-textfield-floatinglabel-disabled-restinglabel-top;
+    }
+  }
+
+
+  // Icon style
+  .#{$primaryStyleName}-with-icon {
+    padding-left: $md-icon-size + $md-textfield-icon-pad-right;
+
+    .#{$primaryStyleName}-icon {
+      display: flex;
+    }
+  }
+
+  .#{$primaryStyleName}-icon {
+    align-items: center;
+    color: $secondary-color;
+    display: none;
+    height: $md-icon-size;
+    justify-content: center;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    top: $md-textfield-icon-top;
+    width: $md-icon-size;
+
+    div, img {
+      display: flex;
+      max-height: 100%;
+      max-width: 100%;
+    }
+  }
+
+
+  // Input field
+  .#{$primaryStyleName}-input {
+    @include md-subheader-font($primary-color);
+    background: none;
+    border: none;
+    // For transition purposes
+    box-shadow: inset 0 -1px 0 $line-color,
+                      0  1px 0 transparent;
+    cursor: pointer;
+    height: $md-textfield-input-height;
+    margin: 0;
+    padding: 0;
+    text-overflow: ellipsis;
+    outline: none;
+
+    &::-webkit-input-placeholder,
+    &::-moz-placeholder,
+    &:-ms-input-placeholder,
+    &:-moz-placeholder {
+      @include md-subheader-font($secondary-color);
+      letter-spacing: normal;
+      word-spacing: normal;
+    }
+  }
+
+
+  // Helper label
+  .#{$primaryStyleName}-helper {
+    @include md-caption-font($secondary-color);
+
+    &:empty {
+      padding: 0 0 $md-textfield-pad-bottom 0;
+    }
+
+    &:not(:empty) {
+      padding: $md-textfield-helper-pad-vertical 0;
+    }
+  }
+
+}
